@@ -165,7 +165,7 @@ https://files.seeedstudio.com/wiki/Grove-OLED-Display-1.12-(SH1107)_V3.0/res/SH1
         for (let page = fromPage; page <= toPage; page++) {// löscht eine Zeile der Matrix ab 7 bis zum Ende
             let oldPage = qMatrix[page]
             qMatrix[page].fill(0, cOffset)
-            if (oldPage != qEmptyMatrix[page] || qMatrix[page] != qEmptyMatrix[page]) {
+            if (oldPage != qEmptyMatrix[page] || qMatrix[page] != qEmptyMatrix[page]) { // only update when needed
                 qChangedPages[page] = true
             }
         }
