@@ -16,6 +16,7 @@ https://files.seeedstudio.com/wiki/Grove-OLED-Display-1.12-(SH1107)_V3.0/res/SH1
     // ========== Buffer ==========
     export let qMatrix: Buffer[] = [] // leeres Array Elemente Typ Buffer
     export let qChangedPages: boolean[] = []
+    let qEmptyMatrix: Buffer[] = []
 
     export enum ePages {
         //% block="128x64"
@@ -59,6 +60,8 @@ https://files.seeedstudio.com/wiki/Grove-OLED-Display-1.12-(SH1107)_V3.0/res/SH1
         if (qMatrix.length < pPages) {
             qMatrix = []
             qChangedPages = []
+            qEmptyMatrix = []
+
             for (let page = 0; page < pPages; page++) { // Page 0..15 oder 0..7
                 //basic.showNumber(page)
                 bu = Buffer.create(cOffset + cx)
@@ -78,6 +81,7 @@ https://files.seeedstudio.com/wiki/Grove-OLED-Display-1.12-(SH1107)_V3.0/res/SH1
                 bu.setUint8(6, eCONTROL.x40_Data) // CONTROL Byte 0x40: Display Data
 
                 qMatrix.push(bu) // Array aus 8 oder 16 Buffern je 128 Byte
+                qEmptyMatrix.push(bu)
                 qChangedPages.push(false)
             }
         }
@@ -161,7 +165,7 @@ https://files.seeedstudio.com/wiki/Grove-OLED-Display-1.12-(SH1107)_V3.0/res/SH1
         for (let page = fromPage; page <= toPage; page++) {// löscht eine Zeile der Matrix ab 7 bis zum Ende
             let oldPage = qMatrix[page]
             qMatrix[page].fill(0, cOffset)
-            if (oldPage != 0) {
+            if (oldPage != qEmptyMatrix[page]) {
                 qChangedPages[page] = true
             }
         }
