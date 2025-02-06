@@ -159,7 +159,7 @@ https://files.seeedstudio.com/wiki/Grove-OLED-Display-1.12-(SH1107)_V3.0/res/SH1
         fromPage = Math.constrain(fromPage, 0, qMatrix.length - 1)
         toPage = Math.constrain(toPage, fromPage, qMatrix.length - 1)
         for (let page = fromPage; page <= toPage; page++) {// löscht eine Zeile der Matrix ab 7 bis zum Ende
-            oldPage = qMatrix[page]
+            let oldPage = qMatrix[page]
             qMatrix[page].fill(0, cOffset)
             if (oldPage != qMatrix[page]) {
                 qChangedPages[page] = true
